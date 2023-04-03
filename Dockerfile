@@ -1,6 +1,5 @@
 FROM postgres:15.2-alpine as postgres
-
-ENV POSTGRES_PASSWORD=mrc201
+WORKDIR /db
 
 FROM node:lts-alpine3.16 as fastify
 
@@ -10,6 +9,8 @@ WORKDIR /app
 
 RUN npm install
 
+RUN apk update && apk add bash
+
 COPY request.d.ts node_modules/fastify/types
 
-CMD npx prisma migrate deploy ; npm start
+EXPOSE 3000
