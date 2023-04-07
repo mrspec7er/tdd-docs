@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import multer from "fastify-multer";
 import fastifyStatic from "@fastify/static";
 import path from "path";
+import cors from "@fastify/cors";
 import { fastifySchedule } from "@fastify/schedule";
 
 import userRoutes from "./routes/userRoute";
@@ -30,6 +31,9 @@ const app = fastify({
 });
 
 dotenv.config();
+app.register(cors, {
+  origin: "*",
+});
 app.register(multer.contentParser);
 app.register(fastifyStatic, {
   root: path.join(__dirname, "public"),
