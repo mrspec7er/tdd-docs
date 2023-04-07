@@ -11,6 +11,6 @@ RUN npm install
 
 RUN apk update && apk add bash
 
-COPY request.d.ts node_modules/fastify/types
+# COPY request.d.ts node_modules/fastify/types
 
 EXPOSE 3000

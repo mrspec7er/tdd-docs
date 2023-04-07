@@ -7,7 +7,7 @@
     "build": "tsc -p tsconfig.json",
     "start": "ts-node -- index.ts",
     "dev": "nodemon",
-    "postinstall": "cp request.d.ts node_modules/fastify/types && npx prisma migrate deploy && npx prisma generate"
+    "postinstall": "cp request.d.ts node_modules/fastify/types"
   },
   "keywords": [],
   "author": "",
