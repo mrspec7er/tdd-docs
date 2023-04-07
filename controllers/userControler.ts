@@ -236,11 +236,21 @@ export async function resetPassword(
 }
 
 export async function getAllUsers(
-  req: FastifyRequest<{ Body: null }>,
+  req: FastifyRequest<{
+    Body: null;
+    Querystring: { name: string | undefined };
+  }>,
   rep: FastifyReply
 ) {
+  const { name } = req.query;
   try {
     const users = await prisma.user.findMany({
+      where: {
+        name: {
+          contains: name,
+          mode: "insensitive",
+        },
+      },
       include: {
         Profile: true,
         Galerry: true,
