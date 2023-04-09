@@ -2,8 +2,8 @@ version: '3.8'
 
 services: 
   database:
-    image: postgres:15.2-alpine
-    working_dir: /db
+    image: postgres:alpine
+    working_dir: /usr/db
     container_name: project-database
     networks:
       - project
@@ -17,12 +17,15 @@ services:
       - database
     networks:
       - project
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
     build:
       context: .
       target: fastify
     ports:
       - 3000:3000
-    command: bash -c "npx prisma migrate deploy && npm start"
+    command: bash -c "npx prisma migrate deploy && npm run dev"
 
 networks:
   project:

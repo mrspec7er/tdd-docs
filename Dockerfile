@@ -1,11 +1,11 @@
-FROM postgres:15.2-alpine as postgres
-WORKDIR /db
+FROM postgres:alpine as postgres
+WORKDIR /usr/db
 
-FROM node:lts-alpine3.16 as fastify
+FROM node:18-alpine as fastify
 
-COPY . /app/
+COPY . /usr/src/app
 
-WORKDIR /app
+WORKDIR /usr/src/app
 
 RUN npm install
 

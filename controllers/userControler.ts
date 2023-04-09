@@ -248,6 +248,9 @@ export async function getAllUsers(
 ) {
   const { name, page, limit } = req.query;
   try {
+    if (!page || !limit) {
+      return badRequestResponse(rep, "Page and limit params required!");
+    }
     const users = await prisma.user.findMany({
       where: {
         name: {
@@ -255,12 +258,16 @@ export async function getAllUsers(
           mode: "insensitive",
         },
       },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        role: true,
+        Galerry: true,
+        Profile: true,
+      },
       skip: (Number(page) - 1) * Number(limit),
       take: Number(limit),
-      include: {
-        Profile: true,
-        Galerry: true,
-      },
     });
     const totalData = await prisma.user.count({
       where: {
@@ -270,6 +277,7 @@ export async function getAllUsers(
         },
       },
     });
+
     return getSuccessResponse(rep, users, { totalData });
   } catch (err: any) {
     return errorResponse(rep, err.message);
