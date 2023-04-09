@@ -10,7 +10,7 @@ This boilerplate cover basic function for backend service like CRUD, Send Email,
 
 ### Dependencies
 
-- fastify fastify-multer @fastify/static bcrypt nodemailer cors crypto midtrans-client dotenv fast-jwt morgan node-schedule
+- fastify fastify-multer @fastify/static bcrypt nodemailer fastify-cors crypto midtrans-client dotenv fast-jwt morgan node-schedule
 
 ### Development Dependencies
 
@@ -25,7 +25,7 @@ npm init -y
 ```
 
 ```
-npm i fastify @fastify/static bcrypt cors dotenv fast-jwt @fastify/schedule toad-scheduler
+npm i fastify @fastify/static bcrypt fastifycors dotenv fast-jwt @fastify/schedule toad-scheduler
 ```
 
 ```
@@ -37,7 +37,7 @@ npx tsc --init
 ```
 
 - set compilerOptions.target to "ES2017"
-- create file nodemon.json and automation script in package.json
+- create automation script in package.json
 - create and setup file index.ts
 - create controller and routes file
 
