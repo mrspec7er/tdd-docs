@@ -17,3 +17,9 @@ COPY . .
 COPY request.d.ts node_modules/fastify/types
 
 EXPOSE 3000
+
+FROM nginx as nginx
+
+COPY default.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80

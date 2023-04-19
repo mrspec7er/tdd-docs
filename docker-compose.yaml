@@ -1,13 +1,12 @@
 version: '3.8'
 
 services: 
+
   database:
     build:
       context: .
       target: postgres
     container_name: project-database
-    networks:
-      - project
     volumes:
       - db-storage:/var/lib/postgresql/data
     environment:
@@ -21,9 +20,8 @@ services:
   backend:
     container_name: project-backend
     depends_on:
-      - database
-    networks:
-      - project
+      database:
+        condition: service_healthy
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
@@ -31,12 +29,49 @@ services:
     build:
       context: .
       target: fastify
-    ports:
-      - 3000:3000
     command: bash -c "npx prisma db push && npm run dev"
 
-networks:
-  project:
+  backend-n2:
+    container_name: project-backend-n2
+    depends_on:
+      database:
+        condition: service_healthy
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+      - public-img:/usr/src/app/public
+    build:
+      context: .
+      target: fastify
+    command: bash -c "npx prisma generate && npm run dev"
+
+  backend-n3:
+    container_name: project-backend-n3
+    depends_on:
+      database:
+        condition: service_healthy
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+      - public-img:/usr/src/app/public
+    build:
+      context: .
+      target: fastify
+    command: bash -c "npx prisma generate && npm run dev"
+  
+  nginx:
+    container_name: project-nginx
+    restart: always
+    depends_on:
+      - backend
+      - backend-n2
+      - backend-n3
+    build:
+      context: .
+      target: nginx
+    ports:
+      - 8000:80
+
 
 volumes:
   db-storage:
