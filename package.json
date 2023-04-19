@@ -6,8 +6,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "start": "ts-node -- index.ts",
-    "dev": "nodemon -r --legacy-watch ./index.ts",
-    "postinstall": "cp request.d.ts node_modules/fastify/types"
+    "dev": "nodemon -r --legacy-watch ./index.ts"
   },
   "keywords": [],
   "author": "",
