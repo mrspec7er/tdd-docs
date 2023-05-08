@@ -16,19 +16,7 @@ import { schedulerReport } from "./controllers/utilityController";
 const PORT = Number(process.env.PORT) || 3000;
 const HOST = "0.0.0.0";
 
-const app = fastify({
-  logger: {
-    level: "info",
-    serializers: {
-      req(request) {
-        return {
-          method: request.method,
-          url: request.url,
-        };
-      },
-    },
-  },
-});
+const app = fastify({});
 
 dotenv.config();
 app.register(cors, {
@@ -66,10 +54,6 @@ app.listen({ port: PORT, host: HOST }, (err, address) => {
     console.error(err);
     process.exit(1);
   }
-  console.log(
-    `
-🚀 Server ready at: ` + address
-  );
 });
 
 export default app;
